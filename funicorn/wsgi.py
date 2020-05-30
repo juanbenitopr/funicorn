@@ -70,8 +70,11 @@ class WSGIApplication:
 
         self._response_builder.set_body(body)
 
-    def start_response(self, status, response_headers: List[Tuple[str, str]], **kwargs):
-        self.set_response_metadata(status, response_headers)
+    def start_response(self, status, response_headers: List[Tuple[str, str]], exc_info=None):
+        if not exc_info:
+            self.set_response_metadata(status, response_headers)
+        else:
+            raise exc_info[1].with_traceback(exc_info[2])
 
 
 class WSGIEnvironment:
@@ -150,10 +153,17 @@ class ResponseDTO:
         buffer.write('\r\n\r\n'.encode('utf8'))
 
         if self._response.body:
-            body_data = [f'{len(self._response.body)}\r\n'.encode('utf8'),
+            body_size = self.integer_to_byte_hex(len(self._response.body))
+            close_body = self.integer_to_byte_hex(0)
+
+            body_data = [body_size,
                          self._response.body.read(),
-                         b'\r\n']
+                         b'\r\n',
+                         close_body]
 
             buffer.write(b''.join(body_data))
 
         return buffer.getvalue()
+
+    def integer_to_byte_hex(self, number: int) -> bytes:
+        return ('%X\r\n' % number).encode('utf8')

@@ -9,5 +9,5 @@ app = Flask(__name__)
 def hello():
     if request.method == 'POST':
         return request.json
-    return "Works fine"
+    return "Hello World"
 

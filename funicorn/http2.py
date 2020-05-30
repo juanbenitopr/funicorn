@@ -34,7 +34,7 @@ class Request:
         self.body = body
         self.uri = uri
         self.server_name = server_name
-        self.query_param = query_param
+        self.query_param = query_param or ''
         self.scheme = 'https' if ssl else 'http'
         self.protocol = protocol
 

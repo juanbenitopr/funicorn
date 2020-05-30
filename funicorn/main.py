@@ -1,4 +1,4 @@
-from socketserver import BaseRequestHandler, TCPServer
+from socketserver import BaseRequestHandler, TCPServer, ThreadingTCPServer
 from typing import Tuple
 
 from funicorn.http2 import Request, Response
@@ -33,6 +33,7 @@ class Funicorn:
         self.server.serve_forever()
 
     def stop(self):
+        self.server.shutdown()
         self.server.server_close()
 
 
