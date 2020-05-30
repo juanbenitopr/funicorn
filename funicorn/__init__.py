@@ -1,0 +1,1 @@
+from funicorn.main import Funicorn
