@@ -1,6 +1,6 @@
 import importlib
 
-from wsgi import WSGIApplication
+from funicorn.wsgi import WSGIApplication
 
 
 def load_application(app_module: str, app_object: str) -> WSGIApplication:

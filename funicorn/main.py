@@ -1,9 +1,9 @@
 from socketserver import BaseRequestHandler, TCPServer
 from typing import Tuple
 
-from http2 import Request, Response
-from utils import load_application
-from wsgi import RequestDTO, ResponseDTO
+from funicorn.http2 import Request, Response
+from funicorn.utils import load_application
+from funicorn.wsgi import RequestDTO, ResponseDTO
 
 
 class FunicornHandler(BaseRequestHandler):
@@ -39,10 +39,10 @@ class Funicorn:
 if __name__ == '__main__':
 
     try:
-        f = Funicorn(app_path='flask_example', app_obj='app', host='localhost', port=8001)
+        f = Funicorn(app_path='examples.flask', app_obj='app', host='localhost', port=8001)
         print('port 8001')
     except Exception:
-        f = Funicorn(app_path='flask_example', app_obj='app', host='localhost', port=8000)
+        f = Funicorn(app_path='examples.flask', app_obj='app', host='localhost', port=8000)
         print('port 8000')
 
     f.run()

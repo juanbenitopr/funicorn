@@ -3,7 +3,7 @@ import sys
 import io
 import datetime
 
-from http2 import Response, Request, ResponseBuilder, Header, Body
+from funicorn.http2 import Response, Request, ResponseBuilder, Header, Body
 
 
 class WSGIApplication:
